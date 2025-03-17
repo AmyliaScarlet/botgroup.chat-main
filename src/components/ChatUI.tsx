@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Send, Share2, Settings2, ChevronLeft, Box } from 'lucide-react';
+import { Send, Share2, Settings2, ChevronLeft, Box, MenuIcon } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -469,9 +469,10 @@ const ChatUI = () => {
                 <div className="flex items-center md:px-2.5">
                   <div 
                     className="md:hidden flex items-center justify-center m-1  cursor-pointer" 
-                    onClick={toggleSidebar}
                   >
-                    <ChevronLeft className="w-6 h-6" />
+                    <Button variant="ghost" size="icon" onClick={toggleSidebar}>
+                      <MenuIcon className="w-5 h-5" />
+                    </Button>
                   </div>
                   
                   <h1 className="font-medium text-base -ml-1">{group.name}({users.length})</h1>
