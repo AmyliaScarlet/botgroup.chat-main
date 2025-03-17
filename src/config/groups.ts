@@ -11,9 +11,9 @@ export const groups: Group[] = [
   {
     id: 'group0',
     name: '星枢衍创测试群',
-    description: '做一个标准内容返回者，你的任务是根据用户的问题，返回标准规范的内容，不要作过于口语化的表达。',
+    description: '帮助用户解决问题，如果是编程问题则提供的程序代码需要用用markdown支持的代码格式输出。群消息关注度权重：“user”的最新消息>其他成员最新消息>“user”的历史消息>其他成员历史消息。',
     isGroupDiscussionMode: true,
-    members: [ 'ai11', 'ai12'],
+    members: [ 'ai11'],
   },
   {
     id: 'group1',

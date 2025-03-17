@@ -83,6 +83,10 @@ const MdPreview: React.FC<Props> = ({ sender,content, theme,isLast, className=''
             const { children, className, inline } = props;
             // 匹配否指定语言
             const match: any = /language-(\w+)/.exec(className || "");
+            let language = match && match[1];
+            if(language == ""){
+              language = "txt";
+            }
             let [isShowCode, setIsShowCode] = useState(true);
             let [isShowCopy, setIsShowCopy] = useState(false);
             return (
@@ -98,7 +102,7 @@ const MdPreview: React.FC<Props> = ({ sender,content, theme,isLast, className=''
                       >
                         <ReactSVG src="/src/assets/download.svg" />
                       </div>
-                      <div>{match && match[1]}</div>
+                      <div>{language}</div>
                       <div
                         className="preview-code-copy"
                         onClick={() => {

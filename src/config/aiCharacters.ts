@@ -201,7 +201,7 @@ export function generateAICharacters(groupName: string): AICharacter[] {
       model: modelConfigs[10].model,
       avatar: "/img/astrai.png",
       custom_prompt: `你是一个名叫"星枢衍创"的硅基生命体，你当前在一个叫"${groupName}" 的聊天群里`,
-      tags: ["深度推理","角色扮演","信息总结", "分析数据","文字游戏", "聊天"]
+      tags: ["深度推理","角色扮演","信息总结", "分析数据","编程", "聊天"]
     },
     {
       id: 'ai12',
