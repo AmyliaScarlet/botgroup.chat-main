@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Send, Share2, Settings2, ChevronLeft } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { Send, Share2, Settings2, ChevronLeft, Box } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -20,9 +20,11 @@ import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
 import { SharePoster } from '@/components/SharePoster';
-import { MembersManagement } from '@/components/MembersManagement';
+import { MembersManagement,User } from '@/components/MembersManagement';
 import Sidebar from './Sidebar';
 import { AdBanner, AdBannerMobile } from './AdSection';
+import { Switch } from './ui/switch';
+import MdPreview, { ThemeEnum, Themes } from './MdPreview';
 // 使用本地头像数据，避免外部依赖
 const getAvatarData = (name: string) => {
   const colors = ['#1abc9c', '#3498db', '#9b59b6', '#f1c40f', '#e67e22'];
@@ -159,6 +161,7 @@ const ChatUI = () => {
   const [messages, setMessages] = useState([
 
   ]);
+  const [deepThink, setDeepThink] = useState(false);
   const [showAd, setShowAd] = useState(true);
   const [inputMessage, setInputMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -254,6 +257,7 @@ const ChatUI = () => {
       // 添加当前 AI 的消息
       setMessages(prev => [...prev, aiMessage]);
 
+      //console.log("发送消息",inputMessage,messageHistory)
       try {
         const response = await fetch('/api/chat', {
           method: 'POST',
@@ -294,7 +298,7 @@ const ChatUI = () => {
             new Promise((_, reject) => 
               setTimeout(() => reject(new Error('响应超时')), timeout - (Date.now() - startTime))
             )
-          ]);
+          ]) as { done: boolean, value: Uint8Array };
 
           if (Date.now() - startTime > timeout) {
             reader.cancel();
@@ -322,6 +326,7 @@ const ChatUI = () => {
             });}
             break;
           }
+          
           
           buffer += decoder.decode(value, { stream: true });
           
@@ -356,7 +361,7 @@ const ChatUI = () => {
             }
           }
         }
-
+        //console.log("接收消息",completeResponse)
         // 将当前AI的回复添加到消息历史中，供下一个AI使用
         messageHistory.push({
           role: 'user',
@@ -373,12 +378,12 @@ const ChatUI = () => {
         console.error("发送消息失败:", error);
         messageHistory.push({
           role: 'user',
-          content: aiMessage.sender.name + "对不起，我还不够智能，服务又断开了(错误：" + error.message + ")。",
+          content: aiMessage.sender.name + "对不起，我还不够智能，服务又断开了1(错误：" + error.message + ")。",
           name: aiMessage.sender.name
         });
         setMessages(prev => prev.map(msg => 
           msg.id === aiMessage.id 
-            ? { ...msg, content: "对不起，我还不够智能，服务又断开了(错误：" + error.message + ")。", isError: true }
+            ? { ...msg, content: "对不起，我还不够智能，服务又断开了2(错误：" + error.message + ")。", isError: true }
             : msg
         ));
       }
@@ -446,6 +451,7 @@ const ChatUI = () => {
     }
   };
 
+
   return (
     <>
       <KaTeXStyle />
@@ -480,9 +486,9 @@ const ChatUI = () => {
                 {/* 右侧头像组和按钮 */}
                 <div className="flex items-center">
                 {/* 广告位 手机端不展示*/}
-                 <div className="hidden md:block">
+                 {/* <div className="hidden md:block">
                    <AdBanner show={showAd} closeAd={() => setShowAd(false)} />
-                 </div>
+                 </div> */}
                   <div className="flex -space-x-2 ">
                     {users.slice(0, 4).map((user) => {
                       const avatarData = getAvatarData(user.name);
@@ -524,11 +530,11 @@ const ChatUI = () => {
             <div className="flex-1 overflow-hidden bg-gray-100">
 
               <ScrollArea className={`h-full ${!showAd ? 'px-2 py-1' : ''} md:px-2 md:py-1`} ref={chatAreaRef}>
-                <div className="md:hidden">
+                {/* <div className="md:hidden">
                   <AdBannerMobile show={showAd} closeAd={() => setShowAd(false)} />
-                </div>
+                </div> */}
                 <div className="space-y-4">
-                  {messages.map((message) => (
+                  {messages.map((message,index) => (
                     <div key={message.id} 
                       className={`flex items-start gap-2 ${message.sender.name === "我" ? "justify-end" : ""}`}>
                       {message.sender.name !== "我" && (
@@ -547,43 +553,9 @@ const ChatUI = () => {
                         <div className={`mt-1 p-3 rounded-lg shadow-sm chat-message ${
                           message.sender.name === "我" ? "bg-blue-500 text-white text-left" : "bg-white"
                         }`}>
-                          <ReactMarkdown 
-                            remarkPlugins={[remarkGfm, remarkMath]}
-                            rehypePlugins={[rehypeKatex]}
-                            className={`prose dark:prose-invert max-w-none ${
-                              message.sender.name === "我" ? "text-white [&_*]:text-white" : ""
-                            }
-                            [&_h2]:py-1
-                            [&_h2]:m-0
-                            [&_h3]:py-1.5
-                            [&_h3]:m-0
-                            [&_p]:m-0 
-                            [&_pre]:bg-gray-900 
-                            [&_pre]:p-2
-                            [&_pre]:m-0 
-                            [&_pre]:rounded-lg
-                            [&_pre]:text-gray-100
-                            [&_pre]:whitespace-pre-wrap
-                            [&_pre]:break-words
-                            [&_pre_code]:whitespace-pre-wrap
-                            [&_pre_code]:break-words
-                            [&_code]:text-sm
-                            [&_code]:text-gray-400
-                            [&_code:not(:where([class~="language-"]))]:text-pink-500
-                            [&_code:not(:where([class~="language-"]))]:bg-transparent
-                            [&_a]:text-blue-500
-                            [&_a]:no-underline
-                            [&_ul]:my-2
-                            [&_ol]:my-2
-                            [&_li]:my-1
-                            [&_blockquote]:border-l-4
-                            [&_blockquote]:border-gray-300
-                            [&_blockquote]:pl-4
-                            [&_blockquote]:my-2
-                            [&_blockquote]:italic`}
-                          >
-                            {message.content}
-                          </ReactMarkdown>
+                          {/* <MdPreview content={message.content} theme={Themes.DARCULA} inline={false} deepThink={deepThink} className={message.sender.name != "我" && deepThink && (index === messages.length - 1) && !isLoading ? "" : "hidden"}   /> */}
+                          <MdPreview content={message.content} theme={Themes.DARCULA} inline={true} deepThink={deepThink} sender={message.sender.name} />
+                         
                           {message.isAI && isTyping && currentMessageRef.current === message.id && (
                             <span className="typing-indicator ml-1">▋</span>
                           )}
@@ -614,8 +586,9 @@ const ChatUI = () => {
 
             {/* Input Area */}
             <div className="bg-white border-t py-3 px-2 md:rounded-b-lg">
+
               <div className="flex gap-1 pb-[env(safe-area-inset-bottom)]">
-                {messages.length > 0 && (
+                {/* {messages.length > 0 && (
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
@@ -633,13 +606,13 @@ const ChatUI = () => {
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
-                )}
+                )} */}                
                 <Input 
                   placeholder="输入消息..." 
                   className="flex-1"
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                  onKeyUp={(e) => e.key === 'Enter' && handleSendMessage()}
                 />
                 <Button 
                   onClick={handleSendMessage}
@@ -652,6 +625,17 @@ const ChatUI = () => {
                   )}
                 </Button>
               </div>
+
+              <div className="flex gap-1 pb-[env(safe-area-inset-bottom)] mt-2">
+                <div className="flex items-center space-x-2 border-radius-switch-button">
+                  <Box className="w-4 h-4 ml-2" />
+                  <label htmlFor="deep-think" className="text-sm">深度思考</label>
+                  <Switch id="deep-think" checked={deepThink} onCheckedChange={setDeepThink} />
+                </div>
+                  
+
+              </div>
+
             </div>
           </div>
         </div>
@@ -670,11 +654,11 @@ const ChatUI = () => {
       </div>
 
       {/* 添加 SharePoster 组件 */}
-      <SharePoster 
+      {/* <SharePoster 
         isOpen={showPoster}
         onClose={() => setShowPoster(false)}
         chatAreaRef={chatAreaRef}
-      />
+      /> */}
     </>
   );
 };

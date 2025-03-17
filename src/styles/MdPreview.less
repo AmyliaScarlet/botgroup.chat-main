@@ -1,0 +1,151 @@
+pre {
+    margin: 0 !important;
+    min-height: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+    
+  }
+
+  @media (max-width: 768px) {
+    pre {
+      width: 80vw;
+    }
+  }
+  
+  hr {
+    border: none;
+    height: 2px;
+    background-color: #eaecef;
+  }
+  
+  blockquote {
+    margin: 0;
+    border-left: 4px solid rgb(223 226 229);
+    padding-left: 16px;
+  }
+  
+  img {
+    max-width: 100%;
+  }
+  
+  table {
+    display: block;
+    overflow: auto;
+    margin-bottom: 16px;
+    width: 100%;
+    border-collapse: collapse;
+    empty-cells: show;
+    border-spacing: 0;
+    word-break: keep-all;
+  }
+  
+  th {
+    border: 1px solid #dfe2e5;
+    padding: 6px 13px;
+    white-space: nowrap;
+    word-break: normal;
+  }
+  
+  td {
+    border: 1px solid #dfe2e5;
+    padding: 6px 13px;
+    white-space: nowrap;
+    word-break: normal;
+  }
+  
+  thead {
+    tr {
+      background: rgb(248 248 248);
+    }
+  }
+  
+  tbody {
+    tr:nth-child(even) {
+      background: rgb(248 248 248);
+    }
+  }
+  .md-think{
+    background: #717171;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 12px;
+  }
+  .code-header {
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    height: 38px;
+    min-height: 38px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #90a4ae;
+    background: #384a5f;
+    line-height: 38px;
+    border-radius: 16px 16px 0 0;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-shrink: 0;
+    font-family: Menlo,Monaco,Consolas,Courier New,monospace;
+    font-size: 16px;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%;
+    max-width: 1300px;
+  
+    .preview-code-copy {
+      margin-left: auto;
+      cursor: pointer;
+      transition: all 0.3s;
+  
+      .copy-success {
+        color: rgb(73 177 245);
+        line-height: 1rem;
+        position: absolute;
+        top: calc(50% - 25px);
+        left: calc(50% - 80px);
+        background-color: #fff;
+        padding: 20px 50px;
+        border-radius: 5px;
+        font-weight: 600;
+        font-size: 18px;
+      }
+  
+      &:hover {
+        color: rgb(73 177 245);
+      }
+    }
+  }
+  
+  .code-rotate-right {
+    animation: rotate-right 0.2s linear forwards;
+  }
+  
+  .code-rotate-down {
+    animation: rotate-down 0.1s linear forwards;
+  }
+  
+  @keyframes rotate-right {
+    from {
+      transform: rotate(0);
+    }
+  
+    to {
+      transform: rotate(-90deg);
+    }
+  }
+  
+  @keyframes rotate-down {
+    from {
+      transform: rotate(-90deg);
+    }
+  
+    to {
+      transform: rotate(0);
+    }
+  }
+  

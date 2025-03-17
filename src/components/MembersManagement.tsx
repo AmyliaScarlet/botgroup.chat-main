@@ -7,7 +7,7 @@ import { UserPlus, Mic, MicOff } from 'lucide-react';
 import { type AICharacter } from "@/config/aiCharacters";
 import { Switch } from "@/components/ui/switch";
 
-interface User {
+export interface User {
   id: number | string;
   name: string;
   avatar?: string;
