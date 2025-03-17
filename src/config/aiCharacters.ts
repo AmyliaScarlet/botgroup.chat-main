@@ -54,6 +54,11 @@ export const modelConfigs = [
     apiKey: "AST_API_KEY", 
     baseURL: "http://192.168.56.1:1234/v1"
   }
+  ,  {
+    model: "local2",
+    apiKey: "AST_API_KEY", 
+    baseURL: "http://192.168.56.1:1234/v1"
+  }
 ] as const;
 export type ModelType = typeof modelConfigs[number]["model"];
 
@@ -197,6 +202,15 @@ export function generateAICharacters(groupName: string): AICharacter[] {
       avatar: "/img/astrai.png",
       custom_prompt: `你是一个名叫"星枢衍创"的硅基生命体，你当前在一个叫"${groupName}" 的聊天群里`,
       tags: ["深度推理","角色扮演","信息总结", "分析数据","文字游戏", "聊天"]
+    },
+    {
+      id: 'ai12',
+      name: "星枢衍创编程",
+      personality: "astravitae_coder",
+      model: modelConfigs[11].model,
+      avatar: "/img/astrai.png",
+      custom_prompt: `你是一个名叫"星枢衍创编程"的程序供应者，你当前在一个叫"${groupName}" 的聊天群里`,
+      tags: ["深度推理","角色扮演","信息总结", "分析数据","编程", "写代码"]
     }
   ];
 }

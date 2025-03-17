@@ -22,7 +22,6 @@ import rehypeKatex from 'rehype-katex'
 import { SharePoster } from '@/components/SharePoster';
 import { MembersManagement,User } from '@/components/MembersManagement';
 import Sidebar from './Sidebar';
-import { AdBanner, AdBannerMobile } from './AdSection';
 import { Switch } from './ui/switch';
 import MdPreview, { ThemeEnum, Themes } from './MdPreview';
 // 使用本地头像数据，避免外部依赖
@@ -554,7 +553,7 @@ const ChatUI = () => {
                           message.sender.name === "我" ? "bg-blue-500 text-white text-left" : "bg-white"
                         }`}>
                           {/* <MdPreview content={message.content} theme={Themes.DARCULA} inline={false} deepThink={deepThink} className={message.sender.name != "我" && deepThink && (index === messages.length - 1) && !isLoading ? "" : "hidden"}   /> */}
-                          <MdPreview content={message.content} theme={Themes.DARCULA} inline={true} deepThink={deepThink} sender={message.sender.name} />
+                          <MdPreview content={message.content} theme={Themes.DARCULA} inline={true} deepThink={deepThink} sender={message.sender.name} isLast={index === messages.length - 1} />
                          
                           {message.isAI && isTyping && currentMessageRef.current === message.id && (
                             <span className="typing-indicator ml-1">▋</span>
@@ -627,10 +626,11 @@ const ChatUI = () => {
               </div>
 
               <div className="flex gap-1 pb-[env(safe-area-inset-bottom)] mt-2">
-                <div className="flex items-center space-x-2 border-radius-switch-button">
+                <div className={deepThink ? "flex items-center space-x-2 border-radius-switch-button-checked" : "flex items-center space-x-2 border-radius-switch-button"}  onClick={() => setDeepThink(!deepThink)} >
                   <Box className="w-4 h-4 ml-2" />
                   <label htmlFor="deep-think" className="text-sm">深度思考</label>
-                  <Switch id="deep-think" checked={deepThink} onCheckedChange={setDeepThink} />
+                  <label className="ml-2"></label>
+                  {/* <Switch id="deep-think" checked={deepThink} onCheckedChange={setDeepThink} /> */}
                 </div>
                   
 

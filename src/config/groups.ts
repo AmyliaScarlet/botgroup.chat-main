@@ -13,7 +13,7 @@ export const groups: Group[] = [
     name: '星枢衍创测试群',
     description: '做一个标准内容返回者，你的任务是根据用户的问题，返回标准规范的内容，不要作过于口语化的表达。',
     isGroupDiscussionMode: true,
-    members: [ 'ai11'],
+    members: [ 'ai11', 'ai12'],
   },
   {
     id: 'group1',

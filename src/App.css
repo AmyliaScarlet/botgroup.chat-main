@@ -17,3 +17,17 @@
   /* 页脚样式 */
 } 
 
+.border-radius-switch-button {
+  background: #e5e5e5;
+  border-radius: 15px;
+  border: 2px solid #e5e5e5;
+}
+.border-radius-switch-button label {
+  color: #000;
+}
+
+.border-radius-switch-button-checked {
+  background: #336fc4;
+  border-radius: 15px;
+  border: 2px solid #336fc4;
+}

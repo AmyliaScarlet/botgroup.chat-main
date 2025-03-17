@@ -33,6 +33,7 @@ interface Props {
   className?: string;
   children?: React.ReactNode;
   sender?: string;
+  isLast?: boolean;
 }
 
 const inlineCodeStyle = {
@@ -61,39 +62,14 @@ const splitString = (input:string) => {
 
 }
 
+const MdPreview: React.FC<Props> = ({ sender,content, theme,isLast, className='' , deepThink = false} , inline = true) => {
 
-//对内容中的<think>替换为<div class="md-think">
-const thinkParse = (content: string,deepThink:boolean) => {
-  console.log("thinkParse",content)
-  const think = content.match(/<think>(.*?)<\/think>/);
-  console.log("think",think)
-
-    if(deepThink){
-        // 匹配<think>标签  
-        if(think){      
-            return '<div class="md-think">' + think[1] + '</div>';
-        }else{
-            return content;
-        }
-    }else{
-        //删除<think>标签
-        if(think){
-            return content.replace(/<think>(.*?)<\/think>/, '');
-        }else{
-            return content;
-        }
-    }
-}
-
-const MdPreview: React.FC<Props> = ({ sender,content, theme, className='' , deepThink = false} , inline = true) => {
-
-  //content = thinkParse(content,deepThink);
   const [thinkContent, restContent] = splitString(content);
 
   let index = 0;
   return (
     <>
-      <div className={(deepThink && sender != "我") ? "md-think" : "hidden"}>{thinkContent}</div>
+      <div className={(deepThink && sender != "我" && isLast) ? "md-think" : "hidden"}>{thinkContent}</div>
       <ReactMarkdown
         className={className}
         remarkPlugins={[remarkGfm, remarkMath, remarkGemoji]}
