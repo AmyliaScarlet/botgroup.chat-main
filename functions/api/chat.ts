@@ -12,20 +12,20 @@ export async function onRequestPost({ env, request }) {
     }
 
     // 从环境变量中获取 API key
-    // const apiKey = env[modelConfig.apiKey];
-    // if (!apiKey) {
-    //   throw new Error(`${model} 的API密钥未配置`);
-    // }
+    const apiKey = modelConfig.model === "local" ? modelConfig.apiKey : env[modelConfig.apiKey];
+    if (!apiKey) {
+      throw new Error(`${model} 的API密钥未配置`);
+    }
 
     const openai = new OpenAI({
-      apiKey: 'apiKey',
+      apiKey: apiKey,
       baseURL: modelConfig.baseURL
     });
 
     // 根据性格设置不同的系统提示语
     let systemPrompt = "";
 
-    systemPrompt = custom_prompt + "\n 注意重要：1、你在群里叫" + aiName + "认准自己的身份； 2、你的输出内容不要加" + aiName + "：这种多余前缀；3、如果用户提出玩游戏，比如成语接龙等，严格按照游戏规则，不要说一大堆，要简短精炼; 4、保持群聊风格字数严格控制在50字以内，越简短越好（新闻总结类除外）"
+    systemPrompt = custom_prompt + "\n 注意重要：1、你在群里叫" + aiName + "认准自己的身份； 2、你的输出内容不要加" + aiName + "：这种多余前缀；3、如果用户发布内容的最后是编程两个字，则一切围绕编程需求来思考，且最后生成的代码需要用markdown支持的代码格式输出。"
 
     // 构建完整的消息历史
     const baseMessages = [

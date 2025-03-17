@@ -15,15 +15,11 @@ import {
 import {generateAICharacters} from "@/config/aiCharacters";
 import { groups } from "@/config/groups";
 import type { AICharacter } from "@/config/aiCharacters";
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm'
-import remarkMath from 'remark-math'
-import rehypeKatex from 'rehype-katex'
 import { SharePoster } from '@/components/SharePoster';
 import { MembersManagement,User } from '@/components/MembersManagement';
 import Sidebar from './Sidebar';
 import { Switch } from './ui/switch';
-import MdPreview, { ThemeEnum, Themes } from './MdPreview';
+import MdPreview, { Themes } from './MdPreview';
 // 使用本地头像数据，避免外部依赖
 const getAvatarData = (name: string) => {
   const colors = ['#1abc9c', '#3498db', '#9b59b6', '#f1c40f', '#e67e22'];
