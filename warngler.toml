@@ -1,7 +1,3 @@
-[observability]
-enabled = true
-head_sampling_rate = 1 # optional. default = 1.
-
 name = "botgroupchat"
 compatibility_date = "2025-3-20"
 main = "./dist/index.html"  # 确保指向正确的入口文件
@@ -9,3 +5,7 @@ main = "./dist/index.html"  # 确保指向正确的入口文件
 [site]
 bucket = "./dist"  # 指向 React 构建后的静态文件目录
 entry-point = "./dist"  # 可选，确保指向正确的目录
+
+[observability]
+enabled = true
+head_sampling_rate = 1 # optional. default = 1.
