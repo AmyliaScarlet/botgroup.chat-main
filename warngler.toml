@@ -1,6 +1,7 @@
 name = "botgroupchat"
 compatibility_date = "2025-3-20"
 main = "./dist/index.html"  # 确保指向正确的入口文件
+account_id = "913d9fb6ea62fa2d18af74039ecf5a91"  # 你的 Cloudflare 账户 ID
 
 [site]
 bucket = "./dist"  # 指向 React 构建后的静态文件目录
