@@ -13,6 +13,7 @@ import { darcula, oneDark, prism, vs } from "react-syntax-highlighter/dist/esm/s
 import "@/styles/MdPreview.less";
 import { useState } from "react";
 import ClipboardUtil from "@/lib/ClipboardUtil";
+import { Copy, FoldVertical } from "lucide-react";
 
 // Change enum to type
 export type ThemeEnum = typeof prism | typeof oneDark | typeof darcula | typeof vs;
@@ -100,7 +101,7 @@ const MdPreview: React.FC<Props> = ({ sender,content, theme,isLast, className=''
                         className={isShowCode ? "code-rotate-down" : "code-rotate-right"}
                         onClick={() => setIsShowCode(!isShowCode)}
                       >
-                        <ReactSVG src="/src/assets/download.svg" />
+                        <FoldVertical className="w-5 h-5" />
                       </div>
                       <div>{language}</div>
                       <div
@@ -114,7 +115,7 @@ const MdPreview: React.FC<Props> = ({ sender,content, theme,isLast, className=''
                         }}
                       >
                         {isShowCopy && <span className=" copy-success">复制成功</span>}
-                        <ReactSVG src="/src/assets/copy.svg" />
+                        <Copy className="w-5 h-5" />
                       </div>
                     </div>
                     {isShowCode && (

@@ -378,7 +378,7 @@ const ChatUI = () => {
         });
         setMessages(prev => prev.map(msg => 
           msg.id === aiMessage.id 
-            ? { ...msg, content: "对不起，我还不够智能，服务又断开了2(错误：" + error.message + ")。", isError: true }
+            ? { ...msg, content: "对不起，我还不够智能，服务又断开了2 ```javascript  import * as Sentry from '@sentry/browser'; Sentry.init({ dsn: 'YOUR_SENTRY_DSN' }); ``` (错误：" + error.message + ")。", isError: true }
             : msg
         ));
       }
